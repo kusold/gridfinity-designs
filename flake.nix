@@ -34,7 +34,7 @@
         in
         {
           devShells.default = pkgs.mkShell {
-            packages = [ openscad' ];
+            packages = [ openscad' pkgs.python3 ];
 
             # OPENSCADPATH makes `use <gridfinity-rebuilt-bins.scad>` (and the
             # library's internal `include <src/core/...>`) resolve from any of
