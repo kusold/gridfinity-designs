@@ -4,3 +4,9 @@
 # nix build output symlinks
 /result
 /result-*
+
+# rendered STL models (large generated artifacts)
+*.stl
+
+# macOS Finder metadata
+.DS_Store
