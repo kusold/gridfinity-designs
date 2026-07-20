@@ -1,0 +1,6 @@
+# direnv (creates a profile cache here when `use flake` runs)
+/.direnv/
+
+# nix build output symlinks
+/result
+/result-*
