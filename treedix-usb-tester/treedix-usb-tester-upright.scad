@@ -6,24 +6,24 @@
   Holds the tester UPRIGHT in a deep narrow pocket. See the companion
   "treedix-usb-tester-flat.scad" for the tester lying flat in a shallow tray.
 
-  A 2 x 1 x 4 gridfinity bin with a single centered rectangular pocket sized
-  for a Treedix USB Tester.
+  A 2 x 1 x 4 gridfinity bin (stacking lip enabled) with a single centered
+  rectangular pocket sized for a Treedix USB Tester.
 
   Footprint:
     gridx = 2 (wide)  -> ~83.5mm  (interior ~81.6mm)
     gridy = 1 (long)  -> ~41.5mm  (interior ~39.6mm)
-    gridz = 4 tall    -> 28mm tall (7mm base; stacking lip disabled)
+    gridz = 4 tall    -> ~31.5mm bounding box (7mm base + stacking lip)
 
   Pocket (all parameters below):
-    76mm along the wide (2-unit) axis
+    77mm along the wide (2-unit) axis
     15mm along the long (1-unit) axis
     25mm deep, clamped to the bin's available interior depth.
 
-  NOTE on depth: with the stacking lip disabled, a 4-unit bin has 21mm of
-  cuttable interior depth (the 7mm base plate is not cuttable). The requested
-  pocket_depth is therefore clamped to that maximum so the pocket floor never
-  cuts into the base plate. Raise `gridz` (5 = 28mm, 6 = 35mm of interior
-  depth) for a deeper pocket.
+  NOTE on depth: with the stacking lip enabled, a 4-unit bin has 19.8mm of
+  cuttable interior depth (the 7mm base plate and ~1.2mm stacking-lip support
+  are not cuttable). The requested pocket_depth is therefore clamped to that
+  maximum so the pocket floor never cuts into the base plate. Raise `gridz`
+  (each unit adds ~7mm of interior depth) for a deeper pocket.
 
   Run inside the nix devShell (OPENSCADPATH is set there), or open in the
   OpenSCAD GUI and use the Customizer to tweak parameters.
@@ -54,12 +54,12 @@ gridz = 4; // .1
 /* [Height] */
 // How "gridz" is interpreted. 0 = 7mm increments excluding the stacking lip.
 gridz_define = 0; // [0:7mm increments - Excludes Stacking Lip, 1:Internal mm - Excludes Base & Stacking Lip, 2:External mm - Excludes Stacking Lip, 3:External mm]
-// If the top stacking lip should exist. Disabled so this bin does not stack.
-include_lip = false;
+// If the top stacking lip should exist (lets bins stack on this one).
+include_lip = true;
 
 /* [USB Tester Pocket] */
 // Pocket size along the 2-unit (wide) axis. Bin interior here is ~81.6mm. Units: mm
-pocket_x = 76; // .1
+pocket_x = 77; // .1
 // Pocket size along the 1-unit (long) axis. Bin interior here is ~39.6mm. Units: mm
 pocket_y = 15; // .1
 // Pocket depth from the top rim. Clamped to the bin's available interior depth. Units: mm
@@ -107,6 +107,7 @@ _pocket_depth = min(pocket_depth, _infill_mm.z);
 echo(str(
     "\n", "=== Treedix USB Tester bin (upright) ===",
     "\n", "  grid:                   ", gridx, " x ", gridy, " x ", gridz, " units",
+    "\n", "  stacking lip:           ", include_lip ? "yes" : "no",
     "\n", "  bin bounding box (mm):  ", bin_get_bounding_box(bin1),
     "\n", "  interior/infill (mm):   ", _infill_mm,
     "\n", "  pocket x,y (mm):        ", [pocket_x, pocket_y],
